@@ -38,7 +38,7 @@ def get_embedding(text, model="text-embedding-3-small", max_retries=5):
 @st.cache_resource
 def build_index():
     resumes = load_resume_texts("resumes")
-    index = faiss.IndexFlatL2(1536)  # correct embedding size
+    index = faiss.IndexFlatL2(1536)  # correct size for text-embedding-3-small
     resume_embeddings = []
     resume_names = list(resumes.keys())
 
