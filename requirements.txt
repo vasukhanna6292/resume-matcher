@@ -1,5 +1,5 @@
-numpy>=1.23.0
-faiss-cpu>=1.7.4
-streamlit>=1.16.0
-PyPDF2>=3.0.0
-openai>=1.0.0
+streamlit
+faiss-cpu
+numpy
+PyPDF2
+openai
