@@ -35,6 +35,7 @@ def get_embedding(text, model="text-embedding-3-small", max_retries=5):
     st.error("Failed after multiple retries due to rate limits.")
     return None
 
+# ---- Cache resume embeddings so we don’t recompute each time ----
 @st.cache_resource
 def build_index():
     resumes = load_resume_texts("resumes")
@@ -42,12 +43,15 @@ def build_index():
     resume_embeddings = []
     resume_names = list(resumes.keys())
 
+    # Only compute embeddings once (Streamlit caches them)
     for text in resumes.values():
         emb = get_embedding(text)
-        resume_embeddings.append(emb)
+        if emb is not None:
+            resume_embeddings.append(emb)
 
     resume_embeddings = np.array(resume_embeddings).astype("float32")
     index.add(resume_embeddings)
+
     return index, resume_names, resume_embeddings, resumes
 
 # ---- Streamlit App ----
